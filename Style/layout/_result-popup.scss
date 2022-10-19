@@ -1,0 +1,13 @@
+/**********************************************************************/
+/*Main*/
+/**********************************************************************/
+
+section.result-popup {
+  display: none;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.activated {
+  @include center;
+}

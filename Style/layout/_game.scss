@@ -1,0 +1,115 @@
+/**********************************************************************/
+/*Main*/
+/**********************************************************************/
+
+.game {
+  display: none;
+  flex-direction: column;
+  width: 460px;
+  height: 623px;
+  min-height: 100vh;
+  margin: 0 auto;
+
+  .nav-container {
+    @include row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 19px;
+
+    .turn {
+      @include row;
+      justify-content: center;
+      align-items: center;
+      width: 140px;
+      height: 48px;
+      gap: 20px;
+      border-radius: 10px;
+      background-color: $SemiDarkNavy;
+      box-shadow: 0px 4px 0px 0px $DarkNavyBoxShadow;
+    }
+
+    #restart {
+      @include center;
+      width: 52px;
+      height: 48px;
+      border-radius: 10px;
+      cursor: pointer;
+      background-color: $Silver;
+      box-shadow: 0px 4px 0px 0px $SilverBoxShadow;
+      transition: 0.2s ease-in-out;
+
+      &:hover {
+        background: $SilverHover;
+      }
+      &:active {
+        box-shadow: 0 0 0 0;
+        transform: translateY(4px);
+      }
+    }
+  }
+
+  .grid-container {
+    display: grid;
+    width: 460px;
+    height: 457px;
+    grid-template-columns: 140px 140px 140px;
+    grid-template-rows: 136px 136px 136px;
+    row-gap: 20px;
+    column-gap: 20px;
+
+    .box {
+      border-radius: 15px;
+      background-color: $SemiDarkNavy;
+      box-shadow: 0px 4px 0px 0px $DarkNavyBoxShadow;
+      transition: 0.2s ease-in-out;
+    }
+  }
+  .result {
+    @include row;
+    gap: 19px;
+    margin-top: 15px;
+
+    .you {
+      @include center;
+      flex-direction: column;
+      width: 140px;
+      height: 72px;
+      border-radius: 15px;
+      background-color: $lightBlue;
+    }
+    .ties {
+      @include center;
+      flex-direction: column;
+      width: 140px;
+      height: 72px;
+      border-radius: 15px;
+      background-color: $Silver;
+    }
+    .cpu {
+      @include center;
+      flex-direction: column;
+      width: 140px;
+      height: 72px;
+      border-radius: 15px;
+      background-color: $lightYellow;
+    }
+  }
+}
+
+.launch {
+  @include center;
+}
+
+/*
+.cross {
+  @include center;
+  background-image: url(..//../assets/icon-x.svg) center/cover;
+}
+
+.circle {
+  @include center;
+  background-image: url(..//../assets/icon-o.svg) center/cover;
+}
+
+*/
