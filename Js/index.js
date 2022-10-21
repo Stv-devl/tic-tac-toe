@@ -4,13 +4,14 @@ const game = document.getElementById("game");
 const chooseCross = document.getElementById("chooseCross");
 const chooseCircle = document.getElementById("chooseCircle");
 const restart = document.getElementById("restart");
-let cross, circle, mutliplayers, VsComputer;
+const box = document.querySelectorAll(".box");
+let cross, circle, mutliplayers, VsComputer, i;
 
 /*************************************functions************************************/
 
 /******************Starter page**************************/
 
-// Function to launch when thre starter page is open (game starter page)
+// Function to launch when the starter page is open (game starter page)
 function pageLaunch() {
   starter.classList.add("activate");
   chooseCircle.classList.add("circleActive");
@@ -42,19 +43,19 @@ function playerChoice() {
   if (cross == true && VsComputer == true) {
     start();
     onePlayersP1Cross();
-  }
-  if (circle == true && VsComputer == true) {
+  } else if (circle == true && VsComputer == true) {
     start();
     onePlayersP1Circle();
-  }
-  if (cross == true && mutliplayers == true) {
+  } else if (cross == true && mutliplayers == true) {
     start();
     twoPlayersP1Cross();
-  }
-  if (circle == true && mutliplayers == true) {
+  } else if (circle == true && mutliplayers == true) {
     start();
     twoPlayersP1Circle();
+  } else {
+    alert = "Error";
   }
+  return;
 }
 
 /******************game page**************************/
@@ -88,7 +89,28 @@ function restartGame() {
   game.classList.remove("launch");
 }
 
+//player 1, next player 2
+
+function gameDisplay(data) {
+  if (cross == true) {
+    data.target.classList.add("crossClicked");
+    return (cross = false);
+  } else {
+    data.target.classList.add("circleClicked");
+    return (cross = true);
+  }
+}
+
 /*************************************AddEventListener************************************/
+
+//for each button
+box.forEach((element) => {
+  element.addEventListener("click", (data) => {
+    i = data.target.id[4];
+    console.log(i);
+    gameDisplay(data);
+  });
+});
 
 //choose the cross (starter page)
 chooseCross.addEventListener("click", (e) => {
