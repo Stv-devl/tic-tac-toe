@@ -5,7 +5,21 @@ const chooseCross = document.getElementById("chooseCross");
 const chooseCircle = document.getElementById("chooseCircle");
 const restart = document.getElementById("restart");
 const box = document.querySelectorAll(".box");
-let cross, circle, mutliplayers, VsComputer, i;
+const combinaison = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6],
+];
+
+const crossData = [];
+const circleData = [];
+let board = ["", "", "", "", "", "", "", "", ""];
+let cross, circle, mutliplayers, VsComputer, i, player01, player02;
 
 /*************************************functions************************************/
 
@@ -83,31 +97,140 @@ function twoPlayersP1Circle() {
   playerRight.textContent = "0 (P1)";
 }
 
-// restart the game and back to starter page
+// restart the game and back to starter page (with)
 function restartGame() {
-  starter.classList.add("activate");
-  game.classList.remove("launch");
+  window.location.reload();
 }
 
 //player 1, next player 2
-
 function gameDisplay(data) {
-  if (cross == true) {
+  console.log(cross);
+  console.log(circle);
+
+  if (cross == true && data.target.classList == "box") {
     data.target.classList.add("crossClicked");
-    return (cross = false);
-  } else {
+    winning();
+    return (cross = false), (circle = true);
+  } else if (cross == false && data.target.classList == "box") {
     data.target.classList.add("circleClicked");
-    return (cross = true);
+    console.log((data.target.value = "O"));
+    winning();
+    return (cross = true), (circle = false);
+  } else if (
+    (cross == true && data.target.classList == "box circleClicked") ||
+    (cross == true && data.target.classList == "box crossClicked") ||
+    (circle == true && data.target.classList == "box circleClicked") ||
+    (circle == true && data.target.classList == "box crossClicked")
+  )
+    return;
+}
+
+function circleWin() {
+  if ((player1 = "O")) {
+    return alert("Player 1 win");
+  } else {
+    return alert("Player 2 win ");
+  }
+}
+function crossWin() {
+  if ((player1 = "X")) {
+    return alert("Player 1 win");
+  } else {
+    return alert("Player 2 win ");
   }
 }
 
+function winning() {
+  if (
+    (box00.classList.contains("crossClicked") &&
+      box01.classList.contains("crossClicked") &&
+      box02.classList.contains("crossClicked")) ||
+    (box03.classList.contains("crossClicked") &&
+      box04.classList.contains("crossClicked") &&
+      box05.classList.contains("crossClicked")) ||
+    (box06.classList.contains("crossClicked") &&
+      box07.classList.contains("crossClicked") &&
+      box08.classList.contains("crossClicked")) ||
+    (box00.classList.contains("crossClicked") &&
+      box03.classList.contains("crossClicked") &&
+      box06.classList.contains("crossClicked")) ||
+    (box01.classList.contains("crossClicked") &&
+      box04.classList.contains("crossClicked") &&
+      box07.classList.contains("crossClicked")) ||
+    (box02.classList.contains("crossClicked") &&
+      box05.classList.contains("crossClicked") &&
+      box08.classList.contains("crossClicked")) ||
+    (box02.classList.contains("crossClicked") &&
+      box04.classList.contains("crossClicked") &&
+      box06.classList.contains("crossClicked")) ||
+    (box00.classList.contains("crossClicked") &&
+      box04.classList.contains("crossClicked") &&
+      box08.classList.contains("crossClicked"))
+  )
+    return crossWin();
+  else if (
+    (box00.classList.contains("circleClicked") &&
+      box01.classList.contains("circleClicked") &&
+      box02.classList.contains("circleClicked")) ||
+    (box03.classList.contains("circleClicked") &&
+      box04.classList.contains("circleClicked") &&
+      box05.classList.contains("circleClicked")) ||
+    (box06.classList.contains("circleClicked") &&
+      box07.classList.contains("circleClicked") &&
+      box08.classList.contains("circleClicked")) ||
+    (box00.classList.contains("circleClicked") &&
+      box03.classList.contains("circleClicked") &&
+      box06.classList.contains("circleClicked")) ||
+    (box01.classList.contains("circleClicked") &&
+      box04.classList.contains("circleClicked") &&
+      box07.classList.contains("circleClicked")) ||
+    (box02.classList.contains("circleClicked") &&
+      box05.classList.contains("circleClicked") &&
+      box08.classList.contains("circleClicked")) ||
+    (box00.classList.contains("circleClicked") &&
+      box04.classList.contains("circleClicked") &&
+      box08.classList.contains("circleClicked")) ||
+    (box02.classList.contains("circleClicked") &&
+      box04.classList.contains("circleClicked") &&
+      box06.classList.contains("circleClicked"))
+  )
+    return circleWin();
+}
+
+/*
+function checkWinner() {
+  let roundWon = false;
+  console.log(roundWon);
+
+  for (let i = 0; i < combinaison.length; i++) {
+    const condition = combinaison[i];
+    console.log(condition);
+    const boxA = board[condition[0]];
+    const boxB = board[condition[1]];
+    const boxC = board[condition[2]];
+    console.log(boxA);
+    console.log(boxB);
+    console.log(boxC);
+
+    if (boxA == "" || boxB == "" || boxC == "") {
+      continue;
+    }
+    if (boxA == boxB && boxB == boxC) {
+      console.log(roundWon);
+      roundWon = true;
+      break;
+    }
+    console.log(roundWon);
+  }
+}
+
+checkWinner();
+*/
 /*************************************AddEventListener************************************/
 
 //for each button
 box.forEach((element) => {
   element.addEventListener("click", (data) => {
-    i = data.target.id[4];
-    console.log(i);
     gameDisplay(data);
   });
 });
@@ -116,6 +239,7 @@ box.forEach((element) => {
 chooseCross.addEventListener("click", (e) => {
   cross = true;
   circle = false;
+  player01 = "X";
   choiceCross();
 });
 
@@ -123,6 +247,7 @@ chooseCross.addEventListener("click", (e) => {
 chooseCircle.addEventListener("click", (e) => {
   cross = false;
   circle = true;
+  player01 = "O";
   choiceCircle();
 });
 
@@ -141,7 +266,7 @@ players.addEventListener("click", (e) => {
 });
 
 //restart button (game page)
-restart.addEventListener("click", (e) => {
+restart.addEventListener("click", () => {
   restartGame();
 });
 
