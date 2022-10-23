@@ -297,6 +297,20 @@ a:visited {
   background-color: hsl(39deg, 88%, 58%);
 }
 
+.overlay {
+  display: none;
+  position: fixed;
+  width: 100%;
+  bottom: 0px;
+  min-height: 100vh;
+  z-index: 5;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.activating {
+  display: flex;
+}
+
 .launch {
   display: flex;
   align-items: center;
