@@ -1,8 +1,4 @@
-/**********************************************************************/
-/*Main*/
-/**********************************************************************/
-
-.result-popup {
+.quit-popup {
   display: none;
   position: absolute;
   z-index: 6;
@@ -11,34 +7,15 @@
   background-color: $SemiDarkNavy;
   padding: 45px 0;
 
-  .take-round {
-    @include row;
-    justify-content: center;
-    align-items: center;
-    gap: 24px;
-    margin: 13px 0;
-
-    .circle-win {
-      display: none;
-    }
-    .cross-win {
-      display: none;
-    }
-
-    //interact with JS
-    .logoActivate {
-      display: block;
-    }
-  }
-
-  .popup-button {
+  .button-wrapper {
     @include row;
     justify-content: center;
     gap: 16px;
+    margin-top: 31px;
 
-    #quit {
+    #cancel {
       @include center;
-      width: 76px;
+      width: 146px;
       height: 52px;
       border-radius: 10px;
       background-color: $Silver;
@@ -54,7 +31,7 @@
       }
     }
 
-    #nextRound {
+    #quitGame {
       @include center;
       width: 146px;
       height: 52px;
@@ -74,6 +51,6 @@
   }
 }
 
-.activatePopup {
-  @include center;
+.cancelPopup {
+  display: block;
 }

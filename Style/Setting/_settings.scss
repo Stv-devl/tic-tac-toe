@@ -33,6 +33,11 @@ h4 {
   font-size: 16px;
   font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+p {
+  letter-spacing: 0.9px;
 }
 
 #vsCpu,
@@ -46,11 +51,18 @@ h3 {
   font-weight: 700;
   color: $DarkNavy;
 }
-h5 {
+h5,
+h6 {
   font-size: 40px;
   font-weight: 700;
   color: $lightYellow;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
 }
+h6 {
+  color: $Silver;
+}
+
 #quit,
 #nextRound {
   font-size: 16px;
@@ -70,6 +82,8 @@ button {
   cursor: pointer;
   border-radius: 15px;
   text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
 }
 
 /***************************Setting mixxin***************************/

@@ -11,6 +11,7 @@
 
 <body>
   <main>
+
     <section class="new-game-menu" id="starter">
       <div class="header-menu-container">
         <svg xmlns="http://www.w3.org/2000/svg" width="72" height="32">
@@ -54,7 +55,42 @@
       </div>
     </section>
 
+    <!-- game page -->
     <section class="game" id="game">
+
+      <!-- popup -->
+      <div class="result-popup" id="popup">
+        <div id="resultPopup">
+          <h4 id="resultDisplay">oh no, you lost...</h4>
+          <div class="take-round">
+
+            <svg viewBox="0 0 64 64" width="64" height="64" class="circle-win">
+              <path
+                d="M32 0c17.673 0 32 14.327 32 32 0 17.673-14.327 32-32 32C14.327 64 0 49.673 0 32 0 14.327 14.327 0 32 0Zm0 18.963c-7.2 0-13.037 5.837-13.037 13.037 0 7.2 5.837 13.037 13.037 13.037 7.2 0 13.037-5.837 13.037-13.037 0-7.2-5.837-13.037-13.037-13.037Z"
+                fill="hsla(39, 88%, 58%, 1)" fill-rule="evenodd"></path>
+            </svg>
+
+            <svg viewBox="0 0 64 64" width="64" height="64" class="cross-win">
+              <path
+                d="M15.002 1.147 32 18.145 48.998 1.147a3 3 0 0 1 4.243 0l9.612 9.612a3 3 0 0 1 0 4.243L45.855 32l16.998 16.998a3 3 0 0 1 0 4.243l-9.612 9.612a3 3 0 0 1-4.243 0L32 45.855 15.002 62.853a3 3 0 0 1-4.243 0L1.147 53.24a3 3 0 0 1 0-4.243L18.145 32 1.147 15.002a3 3 0 0 1 0-4.243l9.612-9.612a3 3 0 0 1 4.243 0Z"
+                fill="hsla(178, 60%, 48%, 1)" fill-rule="evenodd"></path>
+            </svg>
+            <h5 id="takeTheRound">take the round</h5>
+          </div>
+          <div class="popup-button">
+            <button id="quit">quit</button>
+            <button id="nextRound">next round</button>
+          </div>
+        </div>
+      </div>
+      <div class="quit-popup" id="quitPopup">
+        <h6>restart game</h6>
+        <div class="button-wrapper">
+          <button id="cancel">no cancel</button>
+          <button id="quitGame">yes, restart</button>
+        </div>
+      </div>
+      <!-- nav -->
       <div class="nav-container">
         <svg xmlns="http://www.w3.org/2000/svg" width="72" height="32">
           <g fill="none" fill-rule="evenodd">
@@ -66,14 +102,20 @@
               fill="#F2B137" fill-rule="nonzero" />
           </g>
         </svg>
+
         <div class="turn">
-          <svg viewBox="0 0 64 64" width="20" height="20">
+          <svg viewBox="0 0 64 64" width="20" height="20" class="cross-turn">
             <path
               d="M15.002 1.147 32 18.145 48.998 1.147a3 3 0 0 1 4.243 0l9.612 9.612a3 3 0 0 1 0 4.243L45.855 32l16.998 16.998a3 3 0 0 1 0 4.243l-9.612 9.612a3 3 0 0 1-4.243 0L32 45.855 15.002 62.853a3 3 0 0 1-4.243 0L1.147 53.24a3 3 0 0 1 0-4.243L18.145 32 1.147 15.002a3 3 0 0 1 0-4.243l9.612-9.612a3 3 0 0 1 4.243 0Z"
               fill="hsla(199, 24%, 73%, 1)" fill-rule="evenodd" />
             </path>
           </svg>
-          <h2>turn</h2>
+          <svg viewBox="0 0 64 64" width="20" height="20" class="circle-turn">
+            <path
+              d="M32 0c17.673 0 32 14.327 32 32 0 17.673-14.327 32-32 32C14.327 64 0 49.673 0 32 0 14.327 14.327 0 32 0Zm0 18.963c-7.2 0-13.037 5.837-13.037 13.037 0 7.2 5.837 13.037 13.037 13.037 7.2 0 13.037-5.837 13.037-13.037 0-7.2-5.837-13.037-13.037-13.037Z"
+              fill="hsla(199, 24%, 73%, 1)" fill-rule="evenodd" />
+            </path>
+            <h2>turn</h2>
         </div>
         <div id="restart">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
@@ -111,30 +153,13 @@
       </div>
     </section>
 
-    <section class="result-popup" id="popup">
-      <div id="resultPopup">
-        <h4>oh no, you lost...</h4>
-        <div>
-          <svg viewBox="0 0 64 64" width="64" height="64">
-            <path
-              d="M32 0c17.673 0 32 14.327 32 32 0 17.673-14.327 32-32 32C14.327 64 0 49.673 0 32 0 14.327 14.327 0 32 0Zm0 18.963c-7.2 0-13.037 5.837-13.037 13.037 0 7.2 5.837 13.037 13.037 13.037 7.2 0 13.037-5.837 13.037-13.037 0-7.2-5.837-13.037-13.037-13.037Z"
-              fill="hsla(200, 32%, 15%, 1)" fill-rule="evenodd"></path>
-          </svg>
-          <h5>take the round</h5>
-        </div>
-        <div class="popup-button">
-          <button id="quit">quit</button>
-          <button id="nextRound">next round</button>
-        </div>
-      </div>
-    </section>
     <!-- overlay -->
     <div class="overlay"></div>
   </main>
 
   <footer>
     <div class=" attribution">
-      Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+      Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>
       Coded by <a href="https://github.com/Stv-devl">Stevan-Dev</a>.
     </div>
   </footer>

@@ -32,6 +32,11 @@ h4 {
   font-size: 16px;
   font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+p {
+  letter-spacing: 0.9px;
 }
 
 #vsCpu,
@@ -46,10 +51,17 @@ h3 {
   color: hsl(200deg, 32%, 15%);
 }
 
-h5 {
+h5,
+h6 {
   font-size: 40px;
   font-weight: 700;
   color: hsl(39deg, 88%, 58%);
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+}
+
+h6 {
+  color: hsl(199deg, 24%, 73%);
 }
 
 #quit,
@@ -70,6 +82,8 @@ button {
   cursor: pointer;
   border-radius: 15px;
   text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
 }
 
 /***************************Setting mixxin***************************/
@@ -224,6 +238,15 @@ a:visited {
   background-color: hsl(200deg, 35%, 19%);
   box-shadow: 0px 4px 0px 0px rgb(20, 32, 39);
 }
+.game .nav-container .turn .cross-turn {
+  display: none;
+}
+.game .nav-container .turn .circle-turn {
+  display: none;
+}
+.game .nav-container .turn .turnActive {
+  display: block;
+}
 .game .nav-container #restart {
   display: flex;
   align-items: center;
@@ -297,20 +320,6 @@ a:visited {
   background-color: hsl(39deg, 88%, 58%);
 }
 
-.overlay {
-  display: none;
-  position: fixed;
-  width: 100%;
-  bottom: 0px;
-  min-height: 100vh;
-  z-index: 5;
-  background-color: rgba(0, 0, 0, 0.8);
-}
-
-.activating {
-  display: flex;
-}
-
 .launch {
   display: flex;
   align-items: center;
@@ -332,16 +341,150 @@ a:visited {
 /**********************************************************************/
 /*Main*/
 /**********************************************************************/
-section.result-popup {
+.result-popup {
   display: none;
-  flex-direction: column;
-  min-height: 100vh;
+  position: absolute;
+  z-index: 6;
+  height: 226px;
+  width: 100%;
+  background-color: hsl(200deg, 35%, 19%);
+  padding: 45px 0;
 }
-
-.activated {
+.result-popup .take-round {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  margin: 13px 0;
+}
+.result-popup .take-round .circle-win {
+  display: none;
+}
+.result-popup .take-round .cross-win {
+  display: none;
+}
+.result-popup .take-round .logoActivate {
+  display: block;
+}
+.result-popup .popup-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 16px;
+}
+.result-popup .popup-button #quit {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 76px;
+  height: 52px;
+  border-radius: 10px;
+  background-color: hsl(199deg, 24%, 73%);
+  box-shadow: 0px 4px 0px 0px rgb(121, 137, 145);
+  transition: 0.2s ease-in-out;
+}
+.result-popup .popup-button #quit:hover {
+  background: hsl(199deg, 24%, 73%);
+}
+.result-popup .popup-button #quit:active {
+  box-shadow: 0 0 0 0;
+  transform: translateY(4px);
+}
+.result-popup .popup-button #nextRound {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 146px;
+  height: 52px;
+  border-radius: 10px;
+  background-color: hsl(39deg, 88%, 58%);
+  box-shadow: 0px 4px 0px 0px rgb(172, 119, 22);
+  transition: 0.2s ease-in-out;
+}
+.result-popup .popup-button #nextRound:hover {
+  background: hsl(39deg, 100%, 69%);
+}
+.result-popup .popup-button #nextRound:active {
+  box-shadow: 0 0 0 0;
+  transform: translateY(4px);
+}
+
+.activatePopup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quit-popup {
+  display: none;
+  position: absolute;
+  z-index: 6;
+  height: 226px;
+  width: 100%;
+  background-color: hsl(200deg, 35%, 19%);
+  padding: 45px 0;
+}
+.quit-popup .button-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 31px;
+}
+.quit-popup .button-wrapper #cancel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 146px;
+  height: 52px;
+  border-radius: 10px;
+  background-color: hsl(199deg, 24%, 73%);
+  box-shadow: 0px 4px 0px 0px rgb(121, 137, 145);
+  transition: 0.2s ease-in-out;
+}
+.quit-popup .button-wrapper #cancel:hover {
+  background: hsl(199deg, 24%, 73%);
+}
+.quit-popup .button-wrapper #cancel:active {
+  box-shadow: 0 0 0 0;
+  transform: translateY(4px);
+}
+.quit-popup .button-wrapper #quitGame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 146px;
+  height: 52px;
+  border-radius: 10px;
+  background-color: hsl(39deg, 88%, 58%);
+  box-shadow: 0px 4px 0px 0px rgb(172, 119, 22);
+  transition: 0.2s ease-in-out;
+}
+.quit-popup .button-wrapper #quitGame:hover {
+  background: hsl(39deg, 100%, 69%);
+}
+.quit-popup .button-wrapper #quitGame:active {
+  box-shadow: 0 0 0 0;
+  transform: translateY(4px);
+}
+
+.cancelPopup {
+  display: block;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  width: 100%;
+  bottom: 0px;
+  min-height: 100vh;
+  z-index: 5;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.activating {
+  display: block;
 }
 
 /*****align footer and set size and color*****/

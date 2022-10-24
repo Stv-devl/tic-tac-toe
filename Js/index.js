@@ -3,6 +3,8 @@ const starter = document.getElementById("starter");
 const game = document.getElementById("game");
 const chooseCross = document.getElementById("chooseCross");
 const chooseCircle = document.getElementById("chooseCircle");
+const crossTurn = document.querySelector(".cross-turn");
+const circleTurn = document.querySelector(".circle-turn");
 const restart = document.getElementById("restart");
 const box = document.querySelectorAll(".box");
 const overlay = document.querySelector(".overlay");
@@ -21,9 +23,10 @@ let mutliplayers, VsComputer, player01;
 let playerSign = "X";
 
 /*************************************functions************************************/
+
 /******************Starter page**************************/
 
-// Function to launch when the starter page is open (game starter page)
+// Function to launch when the starter page is open (game starter page). activate start page, player1 choose circle
 function pageLaunch() {
   starter.classList.add("activate");
   chooseCircle.classList.add("circleActive");
@@ -31,50 +34,48 @@ function pageLaunch() {
 }
 pageLaunch();
 
-//Player 1 choose the cross or the circle
+//Player 1 have to choose the cross or the circle
 function playerChoice() {
   if (player01 == "X") {
     chooseCross.classList.add("crossActive");
     chooseCircle.classList.remove("circleActive");
-    numberOfPlayer();
+    return numberOfPlayer();
   } else {
     chooseCross.classList.remove("crossActive");
     chooseCircle.classList.add("circleActive");
-    numberOfPlayer();
+    return numberOfPlayer();
   }
-  return;
 }
 
-//fonction to activate the Game page
-function start() {
-  starter.classList.remove("activate");
-  game.classList.add("launch");
-}
-
-//fonction to see player type of game choice
+//fonction to see player type of game choice (1player against Comp, or 2 players and choise X or O of player 1 )
 function numberOfPlayer() {
-  if ((player01 = "X" && VsComputer == true)) {
+  if (player01 == "X" && VsComputer == true) {
     playerLeft.textContent = "X (You)";
     playerRight.textContent = "0 (CPU)";
-    start();
-  } else if ((player01 = "O" && VsComputer == true)) {
+    return start();
+  } else if (player01 == "O" && VsComputer == true) {
     playerLeft.textContent = "X (CPU)";
     playerRight.textContent = "0 (You)";
-    start();
-  } else if ((player01 = "X" && mutliplayers == true)) {
+    return start();
+  } else if (player01 == "X" && mutliplayers == true) {
     playerLeft.textContent = "X (P1)";
     playerRight.textContent = "0 (P2)";
-    start();
-  } else if ((player01 = "O" && mutliplayers == true)) {
+    return start();
+  } else if (player01 == "O" && mutliplayers == true) {
     playerLeft.textContent = "X (P2)";
     playerRight.textContent = "0 (P1)";
-    start();
+    return start();
   } else {
     alert = "Error";
   }
-  return;
 }
 
+//fonction to launch the Game page
+function start() {
+  starter.classList.remove("activate");
+  game.classList.add("launch");
+  crossTurn.classList.add("turnActive");
+}
 /******************game page**************************/
 
 // to increment the boxIndex value in the board array.
@@ -96,15 +97,28 @@ function updateBox(element, index) {
 
 //add cross and circle img at click
 function displayImg(element) {
-  if (playerSign == "X") element.classList.add("crossClicked");
+  if (playerSign == "X") return element.classList.add("crossClicked");
   else {
-    element.classList.add("circleClicked");
+    return element.classList.add("circleClicked");
   }
 }
-//change X to O after each turn
+
+//change X to O after each turn and display the turn
 function changePlayer() {
   playerSign = playerSign == "X" ? "O" : "X";
+
+  if (playerSign == "X") {
+    crossTurn.classList.add("turnActive");
+    circleTurn.classList.remove("turnActive");
+    return;
+  } else {
+    circleTurn.classList.add("turnActive");
+    crossTurn.classList.remove("turnActive");
+  }
+  return;
 }
+
+//function for display turn
 
 //check if winning combinaison match
 function checkWinner() {
@@ -120,34 +134,96 @@ function checkWinner() {
     }
     if (a == b && b == c) {
       won = true;
+
       break;
     }
   }
   if (won) {
+    overlay.classList.add("activating");
+    popup.classList.add("activatePopup");
     displayWinner();
   } else if (!board.includes("")) {
+    overlay.classList.add("activating");
+    popup.classList.add("activatePopup");
     displayDraw();
   } else {
     changePlayer();
   }
 }
+const popup = document.getElementById("popup");
+const circleWin = document.querySelector(".circle-win");
+const crossWin = document.querySelector(".cross-win");
 
 //display the winner popup
 function displayWinner() {
-  if (player01 == "O" && playerSign == "O") {
-    overlay.classList.add("activating");
-  } else if (player01 == "O" && playerSign == "X") {
-    overlay.classList.add("activating");
-  } else if (player01 == "X" && playerSign == "X") {
-    overlay.classList.add("activating");
-  } else {
-    overlay.classList.add("activating");
+  if (player01 == "O" && playerSign == "O" && VsComputer == true) {
+    activateCircle();
+    youWon();
+  } else if (player01 == "O" && playerSign == "X" && VsComputer == true) {
+    activateCross();
+    youLost();
+    changeColor();
+  } else if (player01 == "X" && playerSign == "X" && VsComputer == true) {
+    activateCross();
+    changeColor();
+    youWon();
+  } else if (player01 == "X" && playerSign == "O" && VsComputer == true) {
+    activateCircle();
+    youLost();
+  } else if (player01 == "O" && playerSign == "O" && VsComputer == false) {
+    activateCircle();
+    player1Win();
+  } else if (player01 == "O" && playerSign == "X" && VsComputer == false) {
+    activateCross();
+    changeColor();
+    player2Win();
+  } else if (player01 == "X" && playerSign == "X" && VsComputer == false) {
+    activateCross();
+    changeColor();
+    player1Win();
+  } else if (player01 == "X" && playerSign == "O" && VsComputer == false) {
+    activateCircle();
+    player2Win();
   }
 }
 
+//change color of takeTheRound
+function changeColor() {
+  takeTheRound.style.color = "hsla(178, 60%, 48%, 1)";
+}
+//activate circle
+function activateCircle() {
+  circleWin.classList.add("logoActivate");
+}
+//activate cross
+function activateCross() {
+  crossWin.classList.add("logoActivate");
+}
+//display text "you won"
+function youWon() {
+  resultDisplay.textContent = "you won!";
+}
+//display text "oh no you lost"
+function youLost() {
+  resultDisplay.textContent = "oh no, you lost...";
+}
+//display text "player 1 win"
+function player1Win() {
+  resultDisplay.textContent = "player 1 wins!";
+}
+//display text "player 2 win"
+function player2Win() {
+  resultDisplay.textContent = "player 2 wins!";
+}
 //display the drow popup
 function displayDraw() {
-  overlay.classList.add("activating");
+  resultDisplay.textContent = "";
+  takeTheRound.textContent = "round tied";
+  takeTheRound.style.color = "hsla(199, 24%, 73%, 1)";
+}
+
+function reset() {
+  window.location.reload();
 }
 /*************************************AddEventListener************************************/
 
@@ -181,12 +257,30 @@ players.addEventListener("click", () => {
   mutliplayers = true;
   numberOfPlayer();
 });
+const quitPopup = document.querySelector(".quit-popup");
 
+console.log(restart);
 //restart button (game page)
 restart.addEventListener("click", () => {
-  window.location.reload();
+  overlay.classList.add("activating");
+  quitPopup.classList.add("cancelPopup");
 });
 
+//quit button (popup) for quit game or not
+quit.addEventListener("click", () => {
+  reset();
+});
+
+//cancel reset game
+cancel.addEventListener("click", () => {
+  overlay.classList.remove("activating");
+  quitPopup.classList.remove("cancelPopup");
+});
+
+//comfirm reset game
+quitGame.addEventListener("click", () => {
+  reset();
+});
 /*
 //I have problem to do hover so use javascript => for cross
 chooseCross.addEventListener(
@@ -202,9 +296,7 @@ chooseCross.addEventListener(
   },
   false
 );
-*/
-/*
-//I have problem to do hover so use javascript => for circle
+
 chooseCircle.addEventListener(
   "mouseenter",
   function (event) {
