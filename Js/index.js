@@ -8,6 +8,10 @@ const circleTurn = document.querySelector(".circle-turn");
 const restart = document.getElementById("restart");
 const box = document.querySelectorAll(".box");
 const overlay = document.querySelector(".overlay");
+const quitPopup = document.querySelector(".quit-popup");
+const popup = document.getElementById("popup");
+const circleWin = document.querySelector(".circle-win");
+const crossWin = document.querySelector(".cross-win");
 const combinaison = [
   [0, 1, 2],
   [3, 4, 5],
@@ -146,44 +150,50 @@ function checkWinner() {
     overlay.classList.add("activating");
     popup.classList.add("activatePopup");
     displayDraw();
+    displayScoreTies();
   } else {
     changePlayer();
   }
 }
-const popup = document.getElementById("popup");
-const circleWin = document.querySelector(".circle-win");
-const crossWin = document.querySelector(".cross-win");
 
 //display the winner popup
 function displayWinner() {
   if (player01 == "O" && playerSign == "O" && VsComputer == true) {
     activateCircle();
     youWon();
+    displayScoreCircle();
   } else if (player01 == "O" && playerSign == "X" && VsComputer == true) {
     activateCross();
     youLost();
     changeColor();
+    displayScoreCross();
   } else if (player01 == "X" && playerSign == "X" && VsComputer == true) {
     activateCross();
     changeColor();
     youWon();
+    displayScoreCross();
   } else if (player01 == "X" && playerSign == "O" && VsComputer == true) {
     activateCircle();
     youLost();
+    displayScoreCircle();
   } else if (player01 == "O" && playerSign == "O" && VsComputer == false) {
     activateCircle();
     player1Win();
+    displayScoreCircle();
   } else if (player01 == "O" && playerSign == "X" && VsComputer == false) {
     activateCross();
     changeColor();
     player2Win();
+    displayScoreCross();
   } else if (player01 == "X" && playerSign == "X" && VsComputer == false) {
     activateCross();
     changeColor();
     player1Win();
+    displayScoreCross();
   } else if (player01 == "X" && playerSign == "O" && VsComputer == false) {
     activateCircle();
     player2Win();
+    displayScoreCircle();
   }
 }
 
@@ -222,24 +232,59 @@ function displayDraw() {
   takeTheRound.style.color = "hsla(199, 24%, 73%, 1)";
 }
 
+/*************display score***************/
+//display the score at each turn
+function displayScoreCross() {
+  scoreCross.textContent = ++scoreCross.textContent;
+}
+//display the score at each turn
+function displayScoreTies() {
+  scoreTies.textContent = ++scoreTies.textContent;
+}
+//display the score at each turn
+function displayScoreCircle() {
+  scoreCircle.textContent = ++scoreCircle.textContent;
+}
+
+//Next round => reset element to play new turn
+function LaunchNextRound() {
+  //remove overlay & popup
+  overlay.classList.remove("activating");
+  popup.classList.remove("activatePopup");
+  //remove box SVG, board array and put start playersign at X
+  box.forEach((box) => {
+    box.classList.remove("circleClicked", "crossClicked");
+  });
+  board = ["", "", "", "", "", "", "", "", ""];
+  playerSign = "X";
+  //cross & circle turn remove
+  circleWin.classList.remove("logoActivate");
+  crossWin.classList.remove("logoActivate");
+  takeTheRound.style.color = " hsla(39, 88%, 58%, 1)";
+  //cross & circle turn remove
+  crossTurn.classList.add("turnActive");
+  circleTurn.classList.remove("turnActive");
+}
+
+//reset page by reload => go to stater page
 function reset() {
   window.location.reload();
 }
 /*************************************AddEventListener************************************/
 
-//for each button
+//for each button (page game)
 box.forEach((element) => {
   element.addEventListener("click", boxClicked);
 });
 
 //choose the cross (starter page)
-chooseCross.addEventListener("click", (e) => {
+chooseCross.addEventListener("click", () => {
   player01 = "X";
   playerChoice();
 });
 
 //choose the circle (starter page)
-chooseCircle.addEventListener("click", (e) => {
+chooseCircle.addEventListener("click", () => {
   player01 = "O";
   playerChoice();
 });
@@ -257,9 +302,7 @@ players.addEventListener("click", () => {
   mutliplayers = true;
   numberOfPlayer();
 });
-const quitPopup = document.querySelector(".quit-popup");
 
-console.log(restart);
 //restart button (game page)
 restart.addEventListener("click", () => {
   overlay.classList.add("activating");
@@ -281,6 +324,11 @@ cancel.addEventListener("click", () => {
 quitGame.addEventListener("click", () => {
   reset();
 });
+
+nextRound.addEventListener("click", () => {
+  LaunchNextRound();
+});
+
 /*
 //I have problem to do hover so use javascript => for cross
 chooseCross.addEventListener(
