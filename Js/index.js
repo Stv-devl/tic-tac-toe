@@ -22,7 +22,17 @@ const combinaison = [
   [0, 4, 8],
   [2, 4, 6],
 ];
-let board = ["", "", "", "", "", "", "", "", ""];
+let board = [
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+];
 let mutliplayers, VsComputer, player01;
 let playerSign = "X";
 
@@ -86,12 +96,68 @@ function start() {
 function boxClicked() {
   const boxIndex = this.getAttribute("boxIndex");
 
-  if (board[boxIndex] != "") {
-    return;
-  }
-  updateBox(this, boxIndex);
-  checkWinner();
+  if (board[boxIndex] == undefined && VsComputer == false) {
+    updateBox(this, boxIndex);
+    checkWinner();
+  } else if (
+    board[boxIndex] == undefined &&
+    VsComputer == true &&
+    player01 == "X" &&
+    playerSign == "X"
+  ) {
+    computerPlayO(this, boxIndex);
+    updateBox(this, boxIndex);
+    changePlayer();
+    checkWinner();
+  } else return; /* else if (
+    board[boxIndex] == undefined &&
+    VsComputer == true &&
+    player01 == "X"
+  ) {
+    computerPlayO(this, boxIndex);
+    updateBox(this, boxIndex);
+    checkWinner();
+  }*/
 }
+
+const computerPlayO = (boxIndex) => {
+  const boxrandom = [00, 01, 02, 03, 04, 05, 06, 07, 08];
+  let random = Math.floor(Math.random() * boxrandom.length);
+  let value = boxrandom[random];
+
+  setTimeout(function () {
+    if (box[value].classList == "box") {
+      box[value].classList.add("circleClicked");
+      boxIndex = value;
+      board[boxIndex] = playerSign;
+      console.log(board);
+      return changePlayer();
+    } else {
+      return computerPlayO();
+    }
+  }, 500);
+};
+
+/*
+const computerPlayX = (boxIndex) => {
+  const boxrandom02 = [00, 01, 02, 03, 04, 05, 06, 07, 08];
+  let random02 = Math.floor(Math.random() * boxrandom.length);
+  let value02 = boxrandom02[random02];
+
+  setTimeout(function () {
+    if (box[value02].classList == "box") {
+      changePlayer();
+      box[value02].classList.add("circleClicked");
+      boxIndex = value02;
+      board[boxIndex] = playerSign;
+      console.log(board);
+      return changePlayer();
+    } else {
+      return computerPlayO();
+    }
+  }, 500);
+};
+*/
 
 //the board index will be X or O
 function updateBox(element, index) {
@@ -101,10 +167,14 @@ function updateBox(element, index) {
 
 //add cross and circle img at click
 function displayImg(element) {
-  if (playerSign == "X") return element.classList.add("crossClicked");
-  else {
+  if (playerSign == "X" && VsComputer == false)
+    return element.classList.add("crossClicked");
+  else if (playerSign == "O" && VsComputer == false)
     return element.classList.add("circleClicked");
-  }
+  else if (playerSign == "X" && player01 == "X" && VsComputer == true)
+    return element.classList.add("crossClicked");
+  else if (playerSign == "O" && player01 == "O" && VsComputer == true)
+    return element.classList.add("circleClicked");
 }
 
 //change X to O after each turn and display the turn
@@ -122,8 +192,6 @@ function changePlayer() {
   return;
 }
 
-//function for display turn
-
 //check if winning combinaison match
 function checkWinner() {
   let won = false;
@@ -133,7 +201,7 @@ function checkWinner() {
     let b = board[condition[1]];
     let c = board[condition[2]];
 
-    if (a == "" || b == "" || c == "") {
+    if (a == undefined || b == undefined || c == undefined) {
       continue;
     }
     if (a == b && b == c) {
@@ -142,18 +210,21 @@ function checkWinner() {
       break;
     }
   }
-  if (won) {
+  if (won == true) {
     overlay.classList.add("activating");
     popup.classList.add("activatePopup");
     displayWinner();
-  } else if (!board.includes("")) {
+  } else if (!board.includes(undefined)) {
     overlay.classList.add("activating");
     popup.classList.add("activatePopup");
     displayDraw();
     displayScoreTies();
-  } else {
-    changePlayer();
-  }
+  } else return multiOrCpu();
+}
+
+function multiOrCpu() {
+  if (VsComputer == false) return changePlayer();
+  else return;
 }
 
 //display the winner popup
@@ -255,9 +326,19 @@ function LaunchNextRound() {
   box.forEach((box) => {
     box.classList.remove("circleClicked", "crossClicked");
   });
-  board = ["", "", "", "", "", "", "", "", ""];
+  board = [
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+  ];
   playerSign = "X";
-  //cross & circle turn remove
+  //cross & circle popup logo remove
   circleWin.classList.remove("logoActivate");
   crossWin.classList.remove("logoActivate");
   takeTheRound.style.color = " hsla(39, 88%, 58%, 1)";
@@ -270,6 +351,7 @@ function LaunchNextRound() {
 function reset() {
   window.location.reload();
 }
+
 /*************************************AddEventListener************************************/
 
 //for each button (page game)
