@@ -89,15 +89,18 @@ function start() {
   starter.classList.remove("activate");
   game.classList.add("launch");
   crossTurn.classList.add("turnActive");
+
+  if (player01 == "O" && VsComputer == true) {
+    setTimeout(function (index) {
+      if (VsComputer == true && player01 == "O") {
+        box00.classList.add("crossClicked");
+        board[0] = playerSign;
+      }
+      return changePlayer();
+    }, 300);
+  }
 }
-/*
-  setTimeout(function () {
-    if (VsComputer == true && player01 == "O") {
-      box00.classList.add("crossClicked");
-    }
-  }, 300);
-}
-*/
+
 /******************game page**************************/
 
 // to increment the boxIndex value in the board array.
@@ -356,6 +359,16 @@ function launchNextRound() {
   //cross & circle turn remove
   crossTurn.classList.add("turnActive");
   circleTurn.classList.remove("turnActive");
+
+  if (player01 == "O" && VsComputer == true) {
+    setTimeout(function () {
+      if (VsComputer == true && player01 == "O") {
+        box00.classList.add("crossClicked");
+        board[0] = playerSign;
+      }
+      return changePlayer();
+    }, 300);
+  }
 }
 
 //reset page by reload => go to stater page
