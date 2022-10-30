@@ -89,21 +89,13 @@ function start() {
   starter.classList.remove("activate");
   game.classList.add("launch");
   crossTurn.classList.add("turnActive");
-
-  if (player01 == "O" && VsComputer == true) {
-    setTimeout(function (index) {
-      if (VsComputer == true && player01 == "O") {
-        box00.classList.add("crossClicked");
-        board[0] = playerSign;
-      }
-      return changePlayer();
-    }, 300);
-  }
+  //computer play X at start
+  computerXfirstPlay();
 }
 
 /******************game page**************************/
 
-// to increment the boxIndex value in the board array.
+// when we click on 1 of the box
 function boxClicked() {
   const boxIndex = this.getAttribute("boxIndex");
 
@@ -111,7 +103,7 @@ function boxClicked() {
   if (board[boxIndex] == undefined && VsComputer == false) {
     updateBox(this, boxIndex);
     checkWinner();
-    //vsCpu player01 X
+    //vsCpu player01=X
   } else if (
     board[boxIndex] == undefined &&
     VsComputer == true &&
@@ -122,7 +114,7 @@ function boxClicked() {
     updateBox(this, boxIndex);
     changePlayer();
     checkWinner();
-    //vsCpu player01 O
+    //vsCpu player01=O
   } else if (
     board[boxIndex] == undefined &&
     VsComputer == true &&
@@ -135,15 +127,11 @@ function boxClicked() {
     checkWinner();
   }
 }
-
-console.log(playerSign);
-console.log(board);
-
+//the computer choose a random number from 0 to 8 for play
 const computerPlay = () => {
   const boxrandom = [00, 01, 02, 03, 04, 05, 06, 07, 08];
   let random = Math.floor(Math.random() * boxrandom.length);
   let value = boxrandom[random];
-  console.log(value);
 
   setTimeout(function () {
     if (
@@ -151,18 +139,32 @@ const computerPlay = () => {
       popup.classList != "result-popup activatePopup"
     ) {
       displayCpuSvg(value);
-      board[value] = playerSign;
-      console.log(board);
+      board[value] = playerSign; // add computer play to board
+      checkWinner();
       return changePlayer();
     } else if (
       box[value].classList != "box" &&
       popup.classList != "result-popup activatePopup"
     ) {
-      return computerPlay();
+      return computerPlay(); // if number is already clicked so launch the function again
     } else return;
   }, 500);
 };
 
+// for Vscomputer game if player01 = "O" computer start to play. Here computer always play the same but it could be a random box also.
+function computerXfirstPlay() {
+  if (player01 == "O" && VsComputer == true) {
+    setTimeout(function () {
+      if (VsComputer == true && player01 == "O") {
+        box00.classList.add("crossClicked");
+        board[0] = playerSign; // add computer play to board
+      }
+      return changePlayer();
+    }, 300);
+  }
+}
+
+//display circle or cross on box
 function displayCpuSvg(value) {
   if (playerSign == "O" && player01 == "X")
     return box[value].classList.add("circleClicked");
@@ -208,15 +210,18 @@ function checkWinner() {
   let won = false;
   for (let i = 0; i < combinaison.length; i++) {
     const condition = combinaison[i];
-    let a = board[condition[0]];
-    let b = board[condition[1]];
-    let c = board[condition[2]];
+    let aBox = board[condition[0]];
+    let bBox = board[condition[1]];
+    let cBox = board[condition[2]];
 
-    if (a == undefined || b == undefined || c == undefined) {
+    console.log(aBox, bBox, cBox);
+
+    if (aBox == undefined || bBox == undefined || cBox == undefined) {
       continue;
     }
-    if (a == b && b == c) {
+    if (aBox == bBox && bBox == cBox) {
       won = true;
+      displayWinner(aBox, bBox, cBox);
 
       break;
     }
@@ -225,7 +230,6 @@ function checkWinner() {
     overlay.classList.add("activating");
     popup.classList.add("activatePopup");
     won = false;
-    displayWinner();
   } else if (!board.includes(undefined)) {
     overlay.classList.add("activating");
     popup.classList.add("activatePopup");
@@ -234,53 +238,101 @@ function checkWinner() {
   } else return multiOrCpu();
 }
 
-// if multiplayers whe change layer sign else nothing
+// if multiplayers whe change player sign else nothing
 function multiOrCpu() {
   if (VsComputer == false) return changePlayer();
   else return;
 }
 
 //display the winner popup
-function displayWinner() {
-  if (player01 == "O" && playerSign == "O" && VsComputer == true) {
+function displayWinner(aBox, bBox, cBox) {
+  if (
+    player01 == "O" &&
+    VsComputer == true &&
+    aBox == "O" &&
+    bBox == "O" &&
+    cBox == "O"
+  ) {
     activateCircle();
     youWon();
     displayScoreCircle();
-  } else if (player01 == "O" && playerSign == "X" && VsComputer == true) {
+  } else if (
+    player01 == "O" &&
+    VsComputer == true &&
+    aBox == "X" &&
+    bBox == "X" &&
+    cBox == "X"
+  ) {
     activateCross();
     youLost();
     changeColor();
     displayScoreCross();
-  } else if (player01 == "X" && playerSign == "X" && VsComputer == true) {
+  } else if (
+    player01 == "X" &&
+    VsComputer == true &&
+    aBox == "X" &&
+    bBox == "X" &&
+    cBox == "X"
+  ) {
     activateCross();
     changeColor();
     youWon();
     displayScoreCross();
-  } else if (player01 == "X" && playerSign == "O" && VsComputer == true) {
+  } else if (
+    player01 == "X" &&
+    VsComputer == true &&
+    aBox == "O" &&
+    bBox == "O" &&
+    cBox == "O"
+  ) {
     activateCircle();
     youLost();
     displayScoreCircle();
-  } else if (player01 == "O" && playerSign == "O" && VsComputer == false) {
+  } else if (
+    player01 == "O" &&
+    VsComputer == false &&
+    aBox == "O" &&
+    bBox == "O" &&
+    cBox == "O"
+  ) {
     activateCircle();
     player1Win();
     displayScoreCircle();
-  } else if (player01 == "O" && playerSign == "X" && VsComputer == false) {
+  } else if (
+    player01 == "O" &&
+    VsComputer == false &&
+    aBox == "X" &&
+    bBox == "X" &&
+    cBox == "X"
+  ) {
     activateCross();
     changeColor();
     player2Win();
     displayScoreCross();
-  } else if (player01 == "X" && playerSign == "X" && VsComputer == false) {
+  } else if (
+    player01 == "X" &&
+    VsComputer == false &&
+    aBox == "X" &&
+    bBox == "X" &&
+    cBox == "X"
+  ) {
     activateCross();
     changeColor();
     player1Win();
     displayScoreCross();
-  } else if (player01 == "X" && playerSign == "O" && VsComputer == false) {
+  } else if (
+    player01 == "X" &&
+    VsComputer == false &&
+    aBox == "O" &&
+    bBox == "O" &&
+    cBox == "O"
+  ) {
     activateCircle();
     player2Win();
     displayScoreCircle();
   }
 }
-
+//popup change//
 //change color of takeTheRound
 function changeColor() {
   takeTheRound.style.color = "hsla(178, 60%, 48%, 1)";
@@ -352,23 +404,16 @@ function launchNextRound() {
   ];
   //first player will be "X"
   playerSign = "X";
-  //cross & circle popup logo remove
+  //cross & circle popup logo remove,
   circleWin.classList.remove("logoActivate");
   crossWin.classList.remove("logoActivate");
   takeTheRound.style.color = " hsla(39, 88%, 58%, 1)";
+  takeTheRound.textContent = "take the round";
   //cross & circle turn remove
   crossTurn.classList.add("turnActive");
   circleTurn.classList.remove("turnActive");
-
-  if (player01 == "O" && VsComputer == true) {
-    setTimeout(function () {
-      if (VsComputer == true && player01 == "O") {
-        box00.classList.add("crossClicked");
-        board[0] = playerSign;
-      }
-      return changePlayer();
-    }, 300);
-  }
+  //when player01=0 & Vcomputer = true => Computer will play at new game
+  computerXfirstPlay();
 }
 
 //reset page by reload => go to stater page
