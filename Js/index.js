@@ -12,6 +12,18 @@ const quitPopup = document.querySelector(".quit-popup");
 const popup = document.getElementById("popup");
 const circleWin = document.querySelector(".circle-win");
 const crossWin = document.querySelector(".cross-win");
+const boxrandom = [00, 01, 02, 03, 04, 05, 06, 07, 08];
+const boxId = [
+  "box00",
+  "box01",
+  "box02",
+  "box03",
+  "box04",
+  "box05",
+  "box06",
+  "box07",
+  "box08",
+];
 const combinaison = [
   [0, 1, 2],
   [3, 4, 5],
@@ -35,6 +47,7 @@ let board = [
 ];
 let VsComputer, player01;
 let playerSign = "X";
+let won = false;
 
 /*************************************functions************************************/
 
@@ -95,57 +108,52 @@ function start() {
 
 /******************game page**************************/
 
-// when we click on 1 of the box
+// when we click on 1 of 8 the box
 function boxClicked() {
   const boxIndex = this.getAttribute("boxIndex");
 
   //multiplayers
-  if (board[boxIndex] == undefined && VsComputer == false) {
+  if (board[boxIndex] == undefined && VsComputer == false && won == false) {
     updateBox(this, boxIndex);
-    checkWinner();
+    checkWinner(this, boxIndex);
     //vsCpu player01=X
   } else if (
     board[boxIndex] == undefined &&
     VsComputer == true &&
     player01 == "X" &&
-    playerSign == "X"
+    playerSign == "X" &&
+    won == false
   ) {
     computerPlay();
     updateBox(this, boxIndex);
     changePlayer();
-    checkWinner();
+    checkWinner(this, boxIndex);
     //vsCpu player01=O
   } else if (
     board[boxIndex] == undefined &&
     VsComputer == true &&
     player01 == "O" &&
-    playerSign == "O"
+    playerSign == "O" &&
+    won == false
   ) {
     computerPlay();
     updateBox(this, boxIndex);
     changePlayer();
-    checkWinner();
+    checkWinner(this, boxIndex);
   }
 }
 //the computer choose a random number from 0 to 8 for play
 const computerPlay = () => {
-  const boxrandom = [00, 01, 02, 03, 04, 05, 06, 07, 08];
   let random = Math.floor(Math.random() * boxrandom.length);
   let value = boxrandom[random];
 
   setTimeout(function () {
-    if (
-      box[value].classList == "box" &&
-      popup.classList != "result-popup activatePopup"
-    ) {
+    if (box[value].classList == "box" && won == false) {
       displayCpuSvg(value);
       board[value] = playerSign; // add computer play to board
       checkWinner();
       return changePlayer();
-    } else if (
-      box[value].classList != "box" &&
-      popup.classList != "result-popup activatePopup"
-    ) {
+    } else if (box[value].classList != "box" && won == false) {
       return computerPlay(); // if number is already clicked so launch the function again
     } else return;
   }, 500);
@@ -207,29 +215,45 @@ function changePlayer() {
 
 //check if winning combinaison match
 function checkWinner() {
-  let won = false;
   for (let i = 0; i < combinaison.length; i++) {
     const condition = combinaison[i];
     let aBox = board[condition[0]];
     let bBox = board[condition[1]];
     let cBox = board[condition[2]];
 
-    console.log(aBox, bBox, cBox);
-
     if (aBox == undefined || bBox == undefined || cBox == undefined) {
       continue;
     }
     if (aBox == bBox && bBox == cBox) {
       won = true;
+      //add color to wining combinaison
+      winningCombinaisonX(condition);
+      winningCombinaisonO(condition);
+
+      /*
+      let case01 = condition[0];
+      let case02 = condition[1];
+      let case03 = condition[2];
+      box[case01].style.backgroundColor = "hsla(178, 60%, 48%, 1)";
+      box[case01].style.backgroundImage = `url(./assets/icon-x-dark.svg)`;
+      box[case02].style.backgroundColor = "hsla(178, 60%, 48%, 1)";
+      box[case02].style.backgroundImage = `url(./assets/icon-x-dark.svg)`;
+      box[case03].style.backgroundColor = "hsla(178, 60%, 48%, 1)";
+      box[case03].style.backgroundImage = `url(./assets/icon-x-dark.svg)`;
+      */
+
+      //send to display winner
       displayWinner(aBox, bBox, cBox);
 
       break;
     }
   }
   if (won == true) {
-    overlay.classList.add("activating");
-    popup.classList.add("activatePopup");
-    won = false;
+    setTimeout(function () {
+      overlay.classList.add("activating");
+      popup.classList.add("activatePopup");
+      won = false;
+    }, 1000);
   } else if (!board.includes(undefined)) {
     overlay.classList.add("activating");
     popup.classList.add("activatePopup");
@@ -243,6 +267,11 @@ function multiOrCpu() {
   if (VsComputer == false) return changePlayer();
   else return;
 }
+
+//for see colors on box when we have a winner with X
+function winningCombinaisonX(condition) {}
+//for see colors on box when we have a winner with O
+function winningCombinaisonO(condition) {}
 
 //display the winner popup
 function displayWinner(aBox, bBox, cBox) {
@@ -382,6 +411,30 @@ function displayScoreCircle() {
   scoreCircle.textContent = ++scoreCircle.textContent;
 }
 
+//functions for cross & circle hover display
+//enter cirle
+function mousseEnterCircle(mousseEnter) {
+  mousseEnter.target.classList.add("circleHover");
+  setTimeout(function () {
+    mousseEnter.target.classList.remove("circleHover");
+  }, 2000);
+}
+//enter cross
+function mousseEnterCross(mousseEnter) {
+  mousseEnter.target.classList.add("crossHover");
+  setTimeout(function () {
+    mousseEnter.target.classList.remove("crossHover");
+  }, 2000);
+}
+//leave circle
+function mousseLeaveCircle(mousseLeave) {
+  mousseLeave.target.classList.remove("circleHover");
+}
+//leave cross
+function mousseLeaveCross(mousseLeave) {
+  mousseLeave.target.classList.remove("crossHover");
+}
+
 //Next round => reset element to play new turn
 function launchNextRound() {
   //remove overlay & popup
@@ -429,13 +482,15 @@ box.forEach((element) => {
 });
 
 //choose the cross (starter page)
-chooseCross.addEventListener("click", () => {
+chooseCross.addEventListener("click", (e) => {
+  e.target.style.backgroundColor = "";
   player01 = "X";
   playerChoice();
 });
 
 //choose the circle (starter page)
-chooseCircle.addEventListener("click", () => {
+chooseCircle.addEventListener("click", (e) => {
+  e.target.style.backgroundColor = "";
   player01 = "O";
   playerChoice();
 });
@@ -475,22 +530,31 @@ quitGame.addEventListener("click", () => {
   reset();
 });
 
+//click on next round
 nextRound.addEventListener("click", () => {
   launchNextRound();
 });
 
-/*
-//I have problem to do hover so use javascript => for cross
+//Function to create a hover with JS for cross and circle choice => at "mouseenter" we change color at "mousseleave" we leave this color
 chooseCross.addEventListener(
   "mouseenter",
   function (event) {
-    if (event.target.classList.contains("crossActive")) return;
+    if (event.target.classList.contains("crossActive"))
+      return (event.target.style.backgroundColor = "");
     else {
       event.target.style.backgroundColor = " rgb(43, 60, 69)";
     }
-    setTimeout(function () {
-      event.target.style.backgroundColor = "";
-    }, 500);
+    chooseCross.addEventListener(
+      "mouseleave",
+      function (event) {
+        if (event.target.classList.contains("crossActive"))
+          return (event.target.style.backgroundColor = "");
+        else {
+          event.target.style.backgroundColor = "";
+        }
+      },
+      false
+    );
   },
   false
 );
@@ -502,10 +566,48 @@ chooseCircle.addEventListener(
     else {
       event.target.style.backgroundColor = " rgb(43, 60, 69)";
     }
-    setTimeout(function () {
-      event.target.style.backgroundColor = "";
-    }, 500);
+    chooseCircle.addEventListener(
+      "mouseleave",
+      function (event) {
+        if (event.target.classList.contains("circleActive"))
+          return (event.target.style.backgroundColor = "");
+        else {
+          event.target.style.backgroundColor = "";
+        }
+      },
+      false
+    );
   },
   false
 );
-*/
+
+//Create a hover with JS for cross or circle whe nwe move on board => at "mouseenter" we change color at "mousseleave" we leave this color
+box.forEach((element) => {
+  element.addEventListener("mouseenter", function (mousseEnter) {
+    if (
+      mousseEnter.target.classList.contains("crossClicked") ||
+      mousseEnter.target.classList.contains("circleClicked")
+    ) {
+      return;
+    } else if (playerSign != player01 && VsComputer == true) {
+      return;
+    } else if (playerSign == "X") {
+      return mousseEnterCross(mousseEnter);
+    } else if (playerSign == "O") {
+      return mousseEnterCircle(mousseEnter);
+    }
+  });
+  element.addEventListener("mouseleave", function (mousseLeave) {
+    if (
+      (playerSign == "X" &&
+        mousseLeave.target.classList.contains("crossClicked")) ||
+      mousseLeave.target.classList.contains("circleClicked")
+    ) {
+      return;
+    } else if (playerSign == "X") {
+      return mousseLeaveCross(mousseLeave);
+    } else if (playerSign == "O") {
+      return mousseLeaveCircle(mousseLeave);
+    }
+  });
+});

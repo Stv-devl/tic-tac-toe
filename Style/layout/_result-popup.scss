@@ -6,11 +6,16 @@
   display: none;
   position: absolute;
   z-index: 6;
-  height: 226px;
+  height: 228px;
   width: 100%;
   background-color: $SemiDarkNavy;
   padding: 45px 0;
 
+  /********************Media********************/
+  @media screen and (max-width: 500px) {
+    gap: 40px 0 48px 0;
+  }
+  /*********************************************/
   .take-round {
     @include row;
     justify-content: center;
@@ -18,11 +23,29 @@
     gap: 24px;
     margin: 13px 0;
 
+    /********************Media********************/
+    @media screen and (max-width: 500px) {
+      gap: 8px;
+    }
+    /*********************************************/
+
     .circle-win {
       display: none;
+      /********************Media********************/
+      @media screen and (max-width: 500px) {
+        width: 30px;
+        height: 30px;
+      }
+      /*********************************************/
     }
     .cross-win {
       display: none;
+      /********************Media********************/
+      @media screen and (max-width: 500px) {
+        width: 30px;
+        height: 30px;
+      }
+      /*********************************************/
     }
 
     //interact with JS

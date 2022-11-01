@@ -23,6 +23,24 @@ body {
   font-size: 14px;
   font-weight: 500;
   color: hsl(199deg, 24%, 73%);
+  -webkit-animation: animBefore 2s ease forwards;
+          animation: animBefore 2s ease forwards;
+}
+@-webkit-keyframes animBefore {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes animBefore {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /****************************setting text*****************************/
@@ -58,6 +76,14 @@ h6 {
   color: hsl(39deg, 88%, 58%);
   text-transform: uppercase;
   letter-spacing: 2.5px;
+  /********************Media********************/
+  /*********************************************/
+}
+@media screen and (max-width: 500px) {
+  h5,
+h6 {
+    font-size: 24px;
+  }
 }
 
 h6 {
@@ -101,6 +127,7 @@ a:visited {
   display: none;
   flex-direction: column;
   min-height: 100vh;
+  transition: 0.3 ease-in-out;
 }
 .new-game-menu .choose-mark-container {
   width: 460px;
@@ -110,6 +137,13 @@ a:visited {
   padding: 24px;
   margin: 40px auto 40px auto;
   box-shadow: 0px 8px 0px 0px rgb(20, 32, 39);
+  /********************Media********************/
+  /*********************************************/
+}
+@media screen and (max-width: 500px) {
+  .new-game-menu .choose-mark-container {
+    width: 327px;
+  }
 }
 .new-game-menu .choose-mark-container .choose-sign-wrapper {
   display: flex;
@@ -120,6 +154,13 @@ a:visited {
   border-radius: 10px;
   background-color: hsl(200deg, 32%, 15%);
   margin: 24px auto 17px auto;
+  /********************Media********************/
+  /*********************************************/
+}
+@media screen and (max-width: 500px) {
+  .new-game-menu .choose-mark-container .choose-sign-wrapper {
+    width: 279px;
+  }
 }
 .new-game-menu .choose-mark-container .choose-sign-wrapper .cross {
   display: flex;
@@ -129,11 +170,17 @@ a:visited {
   height: 54px;
   border-radius: 15px;
   cursor: pointer;
-  transition: 0.2 ease-in;
-  /*
-  &:hover {
-    background-color: $DarkNavyHover;
-  }*/
+  /*    &:hover {
+            background-color: $DarkNavyHover;
+          }
+  */
+  /********************Media********************/
+  /*********************************************/
+}
+@media screen and (max-width: 500px) {
+  .new-game-menu .choose-mark-container .choose-sign-wrapper .cross {
+    width: 132px;
+  }
 }
 .new-game-menu .choose-mark-container .choose-sign-wrapper .circle {
   display: flex;
@@ -143,11 +190,16 @@ a:visited {
   height: 54px;
   cursor: pointer;
   border-radius: 15px;
-  /*
-  &:hover {
+  /*     &:hover {
     background-color: $DarkNavyHover;
+  }*/
+  /********************Media********************/
+  /*********************************************/
+}
+@media screen and (max-width: 500px) {
+  .new-game-menu .choose-mark-container .choose-sign-wrapper .circle {
+    width: 132px;
   }
-  */
 }
 .new-game-menu .choose-mark-container p {
   text-transform: uppercase;
@@ -164,6 +216,8 @@ a:visited {
   background-color: hsl(39deg, 88%, 58%);
   box-shadow: 0px 4px 0px 0px rgb(172, 119, 22);
   transition: 0.2s ease-in-out;
+  /********************Media********************/
+  /*********************************************/
 }
 .new-game-menu .button-container #vsCpu:hover {
   background: hsl(39deg, 100%, 69%);
@@ -172,12 +226,19 @@ a:visited {
   box-shadow: 0 0 0 0;
   transform: translateY(4px);
 }
+@media screen and (max-width: 500px) {
+  .new-game-menu .button-container #vsCpu {
+    width: 327px;
+  }
+}
 .new-game-menu .button-container #players {
   width: 460px;
   height: 67px;
   background-color: hsl(178deg, 60%, 48%);
   box-shadow: 0px 4px 0px 0px rgb(28, 127, 124);
   transition: 0.2s ease-in-out;
+  /********************Media********************/
+  /*********************************************/
 }
 .new-game-menu .button-container #players:hover {
   background: rgb(59, 219, 213);
@@ -186,7 +247,13 @@ a:visited {
   box-shadow: 0 0 0 0;
   transform: translateY(4px);
 }
+@media screen and (max-width: 500px) {
+  .new-game-menu .button-container #players {
+    width: 327px;
+  }
+}
 
+/********************interaction with javascript********************/
 .activate {
   display: flex;
   align-items: center;
@@ -216,7 +283,15 @@ a:visited {
   width: 460px;
   height: 623px;
   min-height: 100vh;
+  z-index: 1;
   margin: 0 auto;
+  /********************Media********************/
+  /*********************************************/
+}
+@media screen and (max-width: 500px) {
+  .game {
+    width: 328px;
+  }
 }
 .game .nav-container {
   display: flex;
@@ -225,6 +300,13 @@ a:visited {
   justify-content: space-between;
   width: 100%;
   margin-bottom: 19px;
+  /********************Media********************/
+  /*********************************************/
+}
+@media screen and (max-width: 500px) {
+  .game .nav-container {
+    margin-bottom: 64px;
+  }
 }
 .game .nav-container .turn {
   display: flex;
@@ -237,12 +319,38 @@ a:visited {
   border-radius: 10px;
   background-color: hsl(200deg, 35%, 19%);
   box-shadow: 0px 4px 0px 0px rgb(20, 32, 39);
+  /********************Media********************/
+  /*********************************************/
+}
+@media screen and (max-width: 500px) {
+  .game .nav-container .turn {
+    width: 96px;
+    height: 36px;
+    gap: 8px;
+    border-radius: 5px;
+  }
 }
 .game .nav-container .turn .cross-turn {
   display: none;
+  /********************Media********************/
+  /*********************************************/
+}
+@media screen and (max-width: 500px) {
+  .game .nav-container .turn .cross-turn {
+    width: 16px;
+    height: 16px;
+  }
 }
 .game .nav-container .turn .circle-turn {
   display: none;
+  /********************Media********************/
+  /*********************************************/
+}
+@media screen and (max-width: 500px) {
+  .game .nav-container .turn .circle-turn {
+    width: 16px;
+    height: 16px;
+  }
 }
 .game .nav-container .turn .turnActive {
   display: block;
@@ -258,6 +366,8 @@ a:visited {
   background-color: hsl(199deg, 24%, 73%);
   box-shadow: 0px 4px 0px 0px rgb(121, 137, 145);
   transition: 0.2s ease-in-out;
+  /********************Media********************/
+  /*********************************************/
 }
 .game .nav-container #restart:hover {
   background: hsl(199deg, 24%, 73%);
@@ -266,21 +376,39 @@ a:visited {
   box-shadow: 0 0 0 0;
   transform: translateY(4px);
 }
+@media screen and (max-width: 500px) {
+  .game .nav-container #restart {
+    width: 40px;
+    height: 36px;
+    border-radius: 5px;
+  }
+}
 .game .grid-container {
   display: grid;
   width: 460px;
   height: 457px;
   grid-template-columns: 140px 140px 140px;
-  grid-template-rows: 136px 136px 136px;
+  grid-template-rows: 132px 132px 132px;
   row-gap: 20px;
   -moz-column-gap: 20px;
        column-gap: 20px;
+  /********************Media********************/
+  /*********************************************/
+}
+@media screen and (max-width: 500px) {
+  .game .grid-container {
+    width: 328px;
+    height: 328px;
+    grid-template-columns: 96px 96px 96px;
+    grid-template-rows: 88px 88px 88px;
+  }
 }
 .game .grid-container .box {
   border-radius: 15px;
   background-color: hsl(200deg, 35%, 19%);
-  box-shadow: 0px 4px 0px 0px rgb(20, 32, 39);
+  box-shadow: 0px 8px 0px 0px rgb(20, 32, 39);
   transition: 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
   cursor: pointer;
 }
 .game .result {
@@ -298,6 +426,14 @@ a:visited {
   height: 72px;
   border-radius: 15px;
   background-color: hsl(178deg, 60%, 48%);
+  /********************Media********************/
+  /*********************************************/
+}
+@media screen and (max-width: 500px) {
+  .game .result .you {
+    width: 96px;
+    height: 64px;
+  }
 }
 .game .result .ties {
   display: flex;
@@ -308,6 +444,15 @@ a:visited {
   height: 72px;
   border-radius: 15px;
   background-color: hsl(199deg, 24%, 73%);
+  /********************Media********************/
+  /*********************************************/
+}
+@media screen and (max-width: 500px) {
+  .game .result .ties {
+    width: 96px;
+    height: 64px;
+    border-radius: 10px;
+  }
 }
 .game .result .cpu {
   display: flex;
@@ -318,24 +463,74 @@ a:visited {
   height: 72px;
   border-radius: 15px;
   background-color: hsl(39deg, 88%, 58%);
+  /********************Media********************/
+  /*********************************************/
+}
+@media screen and (max-width: 500px) {
+  .game .result .cpu {
+    width: 96px;
+    height: 64px;
+    border-radius: 10px;
+  }
 }
 
+/********************interaction with javascript********************/
 .launch {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+.crossHover {
+  background-image: url(..//../assets/icon-x-outline.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  /********************Media********************/
+  /*********************************************/
+}
+@media screen and (max-width: 500px) {
+  .crossHover {
+    background-size: 45%;
+  }
+}
+
+.circleHover {
+  background-image: url(..//../assets/icon-o-outline.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  /********************Media********************/
+  /*********************************************/
+}
+@media screen and (max-width: 500px) {
+  .circleHover {
+    background-size: 45%;
+  }
+}
+
 .crossClicked {
   background-image: url(..//../assets/icon-x.svg);
   background-repeat: no-repeat;
   background-position: center;
+  /********************Media********************/
+  /*********************************************/
+}
+@media screen and (max-width: 500px) {
+  .crossClicked {
+    background-size: 45%;
+  }
 }
 
 .circleClicked {
   background-image: url(..//../assets/icon-o.svg);
   background-repeat: no-repeat;
   background-position: center;
+  /********************Media********************/
+  /*********************************************/
+}
+@media screen and (max-width: 500px) {
+  .circleClicked {
+    background-size: 45%;
+  }
 }
 
 /**********************************************************************/
@@ -345,10 +540,17 @@ a:visited {
   display: none;
   position: absolute;
   z-index: 6;
-  height: 226px;
+  height: 228px;
   width: 100%;
   background-color: hsl(200deg, 35%, 19%);
   padding: 45px 0;
+  /********************Media********************/
+  /*********************************************/
+}
+@media screen and (max-width: 500px) {
+  .result-popup {
+    gap: 40px 0 48px 0;
+  }
 }
 .result-popup .take-round {
   display: flex;
@@ -357,12 +559,35 @@ a:visited {
   align-items: center;
   gap: 24px;
   margin: 13px 0;
+  /********************Media********************/
+  /*********************************************/
+}
+@media screen and (max-width: 500px) {
+  .result-popup .take-round {
+    gap: 8px;
+  }
 }
 .result-popup .take-round .circle-win {
   display: none;
+  /********************Media********************/
+  /*********************************************/
+}
+@media screen and (max-width: 500px) {
+  .result-popup .take-round .circle-win {
+    width: 30px;
+    height: 30px;
+  }
 }
 .result-popup .take-round .cross-win {
   display: none;
+  /********************Media********************/
+  /*********************************************/
+}
+@media screen and (max-width: 500px) {
+  .result-popup .take-round .cross-win {
+    width: 30px;
+    height: 30px;
+  }
 }
 .result-popup .take-round .logoActivate {
   display: block;
