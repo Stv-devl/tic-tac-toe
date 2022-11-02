@@ -13,17 +13,6 @@ const popup = document.getElementById("popup");
 const circleWin = document.querySelector(".circle-win");
 const crossWin = document.querySelector(".cross-win");
 const boxrandom = [00, 01, 02, 03, 04, 05, 06, 07, 08];
-const boxId = [
-  "box00",
-  "box01",
-  "box02",
-  "box03",
-  "box04",
-  "box05",
-  "box06",
-  "box07",
-  "box08",
-];
 const combinaison = [
   [0, 1, 2],
   [3, 4, 5],
@@ -226,23 +215,7 @@ function checkWinner() {
     }
     if (aBox == bBox && bBox == cBox) {
       won = true;
-      //add color to wining combinaison
-      winningCombinaisonX(condition);
-      winningCombinaisonO(condition);
-
-      /*
-      let case01 = condition[0];
-      let case02 = condition[1];
-      let case03 = condition[2];
-      box[case01].style.backgroundColor = "hsla(178, 60%, 48%, 1)";
-      box[case01].style.backgroundImage = `url(./assets/icon-x-dark.svg)`;
-      box[case02].style.backgroundColor = "hsla(178, 60%, 48%, 1)";
-      box[case02].style.backgroundImage = `url(./assets/icon-x-dark.svg)`;
-      box[case03].style.backgroundColor = "hsla(178, 60%, 48%, 1)";
-      box[case03].style.backgroundImage = `url(./assets/icon-x-dark.svg)`;
-      */
-
-      //send to display winner
+      winningCombinaison(condition, aBox, bBox, cBox);
       displayWinner(aBox, bBox, cBox);
 
       break;
@@ -269,9 +242,35 @@ function multiOrCpu() {
 }
 
 //for see colors on box when we have a winner with X
-function winningCombinaisonX(condition) {}
-//for see colors on box when we have a winner with O
-function winningCombinaisonO(condition) {}
+function winningCombinaison(condition, aBox, bBox, cBox) {
+  let case01 = condition[0];
+  let case02 = condition[1];
+  let case03 = condition[2];
+  if (aBox == "X" && bBox == "X" && cBox == "X") {
+    box[case01].style.backgroundColor = "hsla(178, 60%, 48%, 1)";
+    box[case01].style.backgroundImage = `url(./assets/icon-x-dark.svg)`;
+    box[case02].style.backgroundColor = "hsla(178, 60%, 48%, 1)";
+    box[case02].style.backgroundImage = `url(./assets/icon-x-dark.svg)`;
+    box[case03].style.backgroundColor = "hsla(178, 60%, 48%, 1)";
+    box[case03].style.backgroundImage = `url(./assets/icon-x-dark.svg)`;
+  } else {
+    box[case01].style.backgroundColor = " hsla(39, 88%, 58%, 1)";
+    box[case01].style.backgroundImage = `url(./assets/icon-o-dark.svg)`;
+    box[case02].style.backgroundColor = " hsla(39, 88%, 58%, 1)";
+    box[case02].style.backgroundImage = `url(./assets/icon-o-dark.svg)`;
+    box[case03].style.backgroundColor = " hsla(39, 88%, 58%, 1)";
+    box[case03].style.backgroundImage = `url(./assets/icon-o-dark.svg)`;
+  }
+  //remove won color
+  setTimeout(function () {
+    box[case01].style.backgroundColor = "";
+    box[case01].style.backgroundImage = "";
+    box[case02].style.backgroundColor = "";
+    box[case02].style.backgroundImage = "";
+    box[case03].style.backgroundColor = "";
+    box[case03].style.backgroundImage = "";
+  }, 1500);
+}
 
 //display the winner popup
 function displayWinner(aBox, bBox, cBox) {
