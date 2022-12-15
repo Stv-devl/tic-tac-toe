@@ -32,7 +32,7 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [frontend Mentor solution](https://your-solution-url.com)
+- Solution URL: [frontend Mentor solution](https://www.frontendmentor.io/solutions/tic-tac-toe-game-ABVg1B52gk)
 - Live Site URL: [Live site](https://stv-devl.github.io/tic-tac-toe/)
 
 ## My process
